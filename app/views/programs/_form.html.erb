@@ -1,0 +1,15 @@
+<%= form_for(@program) do |f| %>
+    <label>Program title:</label><br>
+    <%= f.text_field :title %><br>
+  
+    <label>Program description:</label><br>
+    <%= f.text_area :description %><br>
+
+    <label>Program category:</label><br>
+    <%= f.text_field :category %><br>
+
+    <label>Number of seats:</label><br>
+    <%= f.text_field :num_of_seats %><br>
+  
+    <%= f.submit %>
+<% end %> 

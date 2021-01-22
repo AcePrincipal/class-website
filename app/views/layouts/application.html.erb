@@ -11,6 +11,13 @@
   </head>
 
   <body>
-    <%= yield %>
+    <% if session[:current_user_id] %>
+      <%= link_to "Your Page", "/users/:id" %>
+      <%= link_to "Create Program", "/programs/new" %> 
+      <%= link_to "Categories", "/categories" %>
+      <%= link_to "Logout", logout_path, method:"destroy"%>
+    <% end %>   
+      
+        <%= yield %>
   </body>
 </html>
