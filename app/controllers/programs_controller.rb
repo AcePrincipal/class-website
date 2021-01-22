@@ -24,6 +24,10 @@ class ProgramsController < ApplicationController
         @program = Program.find_by(id: params[:id])
     end 
 
+    def index 
+        @programs = Program.all 
+    end 
+
     private
     def program_params
       params.require(:program).permit(
