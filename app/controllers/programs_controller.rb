@@ -5,16 +5,19 @@ class ProgramsController < ApplicationController
     end 
 
     def create 
-        @program = Program.create(program_params)
-        @category = Category.find_or_create_by(type: params[:category])
+        @program = Program.new(program_params) do |p|
+            @category = Category.find_or_create_by(type: params[:category])
+            p.category = @category
+        end 
+        @program.user = current_user
+
+        @program.save 
 
         if @program
-            @program.category = @category
-
             redirect_to program_path(@program) 
+        else 
+            redirect_to new_program_path
         end 
-
-        redirect_to new_program_path
     end 
 
     def show 

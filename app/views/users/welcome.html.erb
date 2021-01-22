@@ -1,4 +1,7 @@
+<%= flash[:message] %>
+
 <h1>Welcome!</h1>
 
 <%= link_to "Sign Up!", "/users/new" %>
 <%= link_to "Login!", "/login" %>
+<%= button_to "Login with Google!", '/auth/google_oauth2' %>

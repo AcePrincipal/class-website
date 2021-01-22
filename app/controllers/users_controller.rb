@@ -1,18 +1,23 @@
 class UsersController < ApplicationController
 
     def welcome 
+      if session[:current_user_id]
+        redirect_to user_path(session[:current_user_id])
+      end 
     end 
     
     def new 
+        @user = User.new 
     end 
 
     def create 
-        @user = User.new 
-        @user.username = params[:username]
-        @user.email = params[:email]
-        @user.password = params[:password]
+        @user = User.create(user_params)
+        # @user = User.new 
+        # @user.username = params[:username]
+        # @user.email = params[:email]
+        # @user.password = params[:password]
 
-        @user.save 
+        # @user.save 
 
         redirect_to "/login"
     end 
@@ -20,4 +25,13 @@ class UsersController < ApplicationController
     def show 
         @user = current_user
     end 
+
+    private
+    def user_params
+      params.require(:user).permit(
+        :username,
+        :email,
+        :password
+      )
+    end
 end

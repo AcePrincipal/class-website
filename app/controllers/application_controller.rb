@@ -5,4 +5,6 @@ class ApplicationController < ActionController::Base
             @current_user = User.find(session[:current_user_id])
         end 
     end 
+
+    
 end

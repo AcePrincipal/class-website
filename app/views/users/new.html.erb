@@ -1,16 +1,14 @@
 <h1>Register here!</h1>
 
-<%= form_tag("/users") do %>
-    <p>
-        <%= label_tag "Username:" %>
-        <%= text_field_tag "username" %>
+<%= form_for(@user) do |f| %>
+    <label>Username:</label><br>
+    <%= f.text_field :username %><br>
+  
+    <label>email:</label><br>
+    <%= f.text_field :email %><br>
 
-        <%= label_tag "Email:" %>
-        <%= text_field_tag "email" %>
-
-        <%= label_tag "Password:" %>
-        <%= password_field_tag "password" %>
-    </p>
-
-    <%= submit_tag "Register!" %>
-<% end %>
+    <label>Password:</label><br>
+    <%= f.text_field :password %><br>
+  
+    <%= f.submit %>
+<% end %> 

@@ -7,17 +7,37 @@ class SessionsController < ApplicationController
         user = User.find_by(username: params[:username])
         # user = user.try(:authenticate, params[:username][:password])
 
-        return redirect_to(controller: 'sessions', action: 'new') unless user
-
-        session[:current_user_id] = user.id
-        @user = user
-
-        redirect_to user_path(@user)
+        if user.valid?
+            session[:current_user_id] = user.id
+            flash[:message] = "You have successfully signed in!"
+            redirect_to user_path(user)
+        else
+            flash[:message] = user.errors.full_messages.join(", ")
+            redirect_to "/"
+        end
     end
+
+    def omniauth
+        user = User.create_from_omniauth(auth)
+        if user.valid?
+            session[:current_user_id] = user.id
+            flash[:message] = "You have successfully signed in with Google Oauth"
+            redirect_to user_path(user)
+        else
+            flash[:message] = user.errors.full_messages.join(", ")
+            redirect_to "/"
+        end
+    end 
 
     def destroy
         session.delete("current_user_id")
 
         redirect_to "/"
+    end 
+
+    private 
+
+    def auth 
+        request.env['omniauth.auth']
     end 
 end

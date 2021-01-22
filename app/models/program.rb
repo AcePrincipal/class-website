@@ -7,4 +7,12 @@ class Program < ApplicationRecord
     def students
         self.seats.map{|seat| seat.user}
     end
+
+    # def category=(cat)
+    #     self.category = cat 
+    # end 
+
+    # def category
+    #     self.category
+    # end 
 end
