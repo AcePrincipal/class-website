@@ -24,6 +24,7 @@ class UsersController < ApplicationController
 
     def show 
         @user = current_user
+        @programs = Program.where(user_id: @user.id)
     end 
 
     private

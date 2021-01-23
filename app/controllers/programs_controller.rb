@@ -2,13 +2,11 @@ class ProgramsController < ApplicationController
 
     def new 
         @program = Program.new 
+        @program.build_category
     end 
 
     def create 
-        @program = Program.new(program_params) do |p|
-            @category = Category.find_or_create_by(type: params[:category])
-            p.category = @category
-        end 
+        @program = Program.new(program_params)
         @program.user = current_user
 
         @program.save 
@@ -28,12 +26,36 @@ class ProgramsController < ApplicationController
         @programs = Program.all 
     end 
 
+    def edit 
+        @program = Program.find_by(id: params[:id])
+    end 
+
+    def update
+        @program = Program.find_by(id: params[:id])
+        @program.update(program_params)
+        redirect_to program_path(@program)
+    end
+
+    def destroy
+        @program = Program.find_by(id: params[:id])
+        if current_user == @program.user
+            @program.delete
+
+            redirect_to programs_path
+        else
+            redirect_to programs_path
+        end 
+    end 
+
     private
     def program_params
       params.require(:program).permit(
         :title,
         :description,
-        :num_of_seats
+        :num_of_seats,
+        category_attributes: [
+            :cat 
+        ]
       )
     end
 end
