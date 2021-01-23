@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
     def show 
         @user = current_user
-        @programs = Program.where(user_id: @user.id)
+        @programs = Program.where(user_id: @user.id).order(created_at: :desc)
     end 
 
     private

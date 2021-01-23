@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  resources :categories
-  resources :seats
   resources :programs
-  resources :users
+  resources :users, only: [:welcome, :new, :show]
+  resources :categories, only: [:index, :show] do 
+    resources :programs, only: [:new, :index]
+  end 
 
   get '/auth/google_oauth2/callback', to: "sessions#omniauth"
 

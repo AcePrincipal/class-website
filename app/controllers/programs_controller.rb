@@ -1,8 +1,13 @@
 class ProgramsController < ApplicationController
 
     def new 
-        @program = Program.new 
-        @program.build_category
+        if params[:category_id]
+            @category = Category.find_by_id(params[:category_id])
+            @program = @category.programs.build  
+        else 
+            @program = Program.new 
+            @program.build_category
+        end 
     end 
 
     def create 
@@ -23,7 +28,12 @@ class ProgramsController < ApplicationController
     end 
 
     def index 
-        @programs = Program.all 
+        if params[:category_id]
+            @category = Category.find_by_id(params[:category_id])
+            @programs = @category.programs 
+        else 
+            @programs = Program.all.order(created_at: :desc)
+        end 
     end 
 
     def edit 
@@ -53,6 +63,7 @@ class ProgramsController < ApplicationController
         :title,
         :description,
         :num_of_seats,
+        :category_id,
         category_attributes: [
             :cat 
         ]

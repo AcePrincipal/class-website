@@ -11,7 +11,9 @@ class Program < ApplicationRecord
 
     def category_attributes=(attr)
         # byebug
-        self.category = Category.find_or_create_by(attr)
+        if !self.category
+            self.category = Category.find_or_create_by(attr)
+        end 
     end 
 
     def category_attributes

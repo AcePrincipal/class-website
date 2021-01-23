@@ -1,0 +1,8 @@
+<h1> <%= @category.cat %> </h1> 
+
+<ul>
+   <%= render @programs %>
+</ul>
+
+<hr>
+<%= link_to("New Program", new_category_program_path(@category)) %>

@@ -1,0 +1,9 @@
+<label>Existing program category:</label><br>
+<%= f.collection_select(:category_id, Category.order(:cat), :id, :cat, prompt: true) %><br>
+
+    <label>--or--</label><br>
+
+    <%= f.fields_for :category do |c| %>
+        <label>New program category:</label><br>
+        <%= c.text_field :cat %><br>
+    <% end %>

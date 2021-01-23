@@ -3,6 +3,10 @@
 <p> Description: <%= @program.description %> </p>
 <p> Number of Seats: <%= @program.num_of_seats %> </p>
 
-<%= link_to("Join Program", edit_program_path(@program)) %> <br>
-<%= link_to("Edit Program", edit_program_path(@program)) %>
-<%= link_to("Delete Program", program_path(@program), method:"delete") %>
+<% if session[:current_user_id] != @program.user.id %>
+    <%= link_to("Join Program", edit_program_path(@program)) %> <br><br> 
+<% else %>
+    <%= link_to("Edit Program", edit_program_path(@program)) %>
+    <%= link_to("Delete Program", program_path(@program), method:"delete") %>
+<% end %>
+
