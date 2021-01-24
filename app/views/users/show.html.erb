@@ -1,5 +1,10 @@
+<%= flash[:message] %>
+
 <h1>Welcome <%=@user.username%>!</h1>
 
+<%= link_to "Programs You're In!", "/in_programs" %>
+<hr>
+<h3>Programs You Made:</h3>
 <ul>
-   <%= render @programs %>
+    <%= render @programs %>
 </ul>

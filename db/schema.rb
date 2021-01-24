@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_001752) do
     t.string "title"
     t.text "description"
     t.integer "num_of_seats"
+    t.integer "seats_taken"
     t.integer "user_id", null: false
     t.integer "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -31,7 +32,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_001752) do
   end
 
   create_table "seats", force: :cascade do |t|
-    t.integer "number"
+    t.integer "snum"
     t.integer "user_id", null: false
     t.integer "program_id", null: false
     t.datetime "created_at", precision: 6, null: false

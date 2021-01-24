@@ -13,6 +13,7 @@ class ProgramsController < ApplicationController
     def create 
         @program = Program.new(program_params)
         @program.user = current_user
+        @program.seats_taken = 0
 
         @program.save 
 
@@ -21,6 +22,21 @@ class ProgramsController < ApplicationController
         else 
             redirect_to new_program_path
         end 
+    end 
+
+    def add_seat
+        @program = Program.find_by(id: params[:id])
+
+        if @program.add_seat(current_user)
+            redirect_to programs_path
+        else
+            redirect_to program_path(@program)
+        end 
+    end
+
+
+    def open_seats
+        @programs = Program.open_seat_programs
     end 
 
     def show 

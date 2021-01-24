@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
+  get '/programs/open_seats', to: 'programs#open_seats', as:"open_seats"
   resources :programs
-  resources :users, only: [:welcome, :new, :show]
+  get '/users/:id/add_seat', to: 'programs#add_seat', as: "seats"
+  
+  resources :users
+  get "/in_programs", to: "users#joined"
+
   resources :categories, only: [:index, :show] do 
     resources :programs, only: [:new, :index]
   end 
