@@ -7,13 +7,13 @@ class SessionsController < ApplicationController
         user = User.find_by(username: params[:username])
         # user = user.try(:authenticate, params[:username][:password])
 
-        if user.valid?
+        if user
             session[:current_user_id] = user.id
             flash[:message] = "You have successfully signed in!"
             redirect_to user_path(user)
         else
-            flash[:message] = user.errors.full_messages.join(", ")
-            redirect_to "/"
+            flash[:message] = "Username or password incorrect"
+            redirect_to "/login"
         end
     end
 

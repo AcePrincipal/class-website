@@ -17,9 +17,10 @@ class ProgramsController < ApplicationController
 
         @program.save 
 
-        if @program
+        if @program.valid?
             redirect_to program_path(@program) 
         else 
+            flash[:message] = @program.errors.full_messages.join(", ")
             redirect_to new_program_path
         end 
     end 
@@ -30,6 +31,7 @@ class ProgramsController < ApplicationController
         if @program.add_seat(current_user)
             redirect_to programs_path
         else
+            flash[:message] = "Program is full."
             redirect_to program_path(@program)
         end 
     end
@@ -58,8 +60,14 @@ class ProgramsController < ApplicationController
 
     def update
         @program = Program.find_by(id: params[:id])
-        @program.update(program_params)
-        redirect_to program_path(@program)
+
+        if @program.user == current_user
+            @program.update(program_params)
+            redirect_to program_path(@program)
+        else 
+            flash[:message] = @program.errors.full_messages.join(", ")
+            redirect_to edit_program_path(@program)
+        end 
     end
 
     def destroy
