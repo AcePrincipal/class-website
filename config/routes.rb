@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   get '/programs/open_seats', to: 'programs#open_seats', as:"open_seats"
   resources :programs
   get '/users/:id/add_seat', to: 'programs#add_seat', as: "seats"

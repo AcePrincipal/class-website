@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    helper_method :current_user
 
     def current_user 
         if session[:current_user_id]
@@ -6,5 +7,11 @@ class ApplicationController < ActionController::Base
         end 
     end 
 
-    
+    def logged_in?
+        !!session[:current_user_id]
+    end
+
+    def redirect_if_not_logged_in
+        redirect_to '/' if !logged_in?
+    end 
 end

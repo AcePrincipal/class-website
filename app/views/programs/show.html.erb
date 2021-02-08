@@ -1,13 +1,14 @@
 <%= flash[:message] %>
 
-<h1> <%= @program.title %> </h1>
+<h1> Title: <%= @program.title %> </h1>
+<h2> Made By: <%= @program.user.username %> </h2>
 <h3> Category: <%= @program.category.cat %> </h3>
 <p> Description: <%= @program.description %> </p>
-<p> Number of Seats: <%= @program.num_of_seats %> </p>
+<p> Number of Seats Available: <%= @program.num_of_seats - @program.seats_taken %> of <%= @program.num_of_seats %> </p>
 
-<% if session[:current_user_id] != @program.user.id %>
+<% if (session[:current_user_id] != @program.user.id) && !in_p?(@program) %>
     <%= link_to("Join Program", seats_path) %> <br><br> 
-<% else %>
+<% elsif (session[:current_user_id] == @program.user.id)%>
     <%= link_to("Edit Program", edit_program_path(@program)) %>
     <%= link_to("Delete Program", program_path(@program), method:"delete") %>
 <% end %>

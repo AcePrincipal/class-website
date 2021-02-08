@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
     def joined 
       @user = current_user
-      @seats = Seat.where(user_id: @user.id)
+      @seats = @user.seats 
       @programs = @user.program_seats
     end 
 

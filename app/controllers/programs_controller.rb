@@ -1,4 +1,5 @@
 class ProgramsController < ApplicationController
+    before_action :redirect_if_not_logged_in, :current_user
 
     def new 
         if params[:category_id]
@@ -11,13 +12,12 @@ class ProgramsController < ApplicationController
     end 
 
     def create 
-        @program = Program.new(program_params)
-        @program.user = current_user
+        @program = current_user.programs.build(program_params)
+        # @program = Program.new(program_params)
+        # @program.user = current_user
         @program.seats_taken = 0
 
-        @program.save 
-
-        if @program.valid?
+        if @program.save
             redirect_to program_path(@program) 
         else 
             flash[:message] = @program.errors.full_messages.join(", ")
@@ -30,7 +30,7 @@ class ProgramsController < ApplicationController
 
         if @program.add_seat(current_user)
             redirect_to programs_path
-        else
+        else 
             flash[:message] = "Program is full."
             redirect_to program_path(@program)
         end 
@@ -56,6 +56,9 @@ class ProgramsController < ApplicationController
 
     def edit 
         @program = Program.find_by(id: params[:id])
+        if current_user != @program.user 
+            redirect_to '/'
+        end 
     end 
 
     def update

@@ -1,6 +1,8 @@
 class CategoriesController < ApplicationController
+    before_action :redirect_if_not_logged_in, :current_user
+
     def index 
-        @categories = Category.all
+        @categories = Category.all.sort_by{ |c| c.cat}
     end 
 
     def show 

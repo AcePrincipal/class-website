@@ -14,4 +14,16 @@ module ProgramsHelper
             render partial: "cat_select", locals: {f: f}
         end 
     end 
+
+    def in_p?(program)
+        seats = program.seats 
+        
+        seats.each do |s|
+            if s.user == current_user
+                return true
+            end
+        end
+        
+        return false 
+    end 
 end
