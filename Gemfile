@@ -26,6 +26,8 @@ gem 'jbuilder', '~> 2.7'
  gem 'omniauth-rails_csrf_protection' 
  gem 'omniauth-google-oauth2'
 
+ gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
